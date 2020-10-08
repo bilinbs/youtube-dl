@@ -2,9 +2,6 @@ from __future__ import unicode_literals
 import youtube_dl
 import tkinter as tk
 
-
-
-
 class FormatLogger(object):
     message = ''
     def debug(self, msg):
@@ -15,7 +12,6 @@ class FormatLogger(object):
         print('Error'+ msg)
     def info(self, msg):
         print('Info'+msg) 
-
 
 def list_formats():
     url=[urlEntry.get()]
@@ -38,3 +34,5 @@ urlEntry = tk.Entry(window,width = 50)
 urlEntry.pack();
 dlButton = tk.Button(window, text="Download", command=list_formats)
 dlButton.pack()
+
+window.mainloop()
