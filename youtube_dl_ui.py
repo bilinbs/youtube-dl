@@ -1,14 +1,9 @@
 from __future__ import unicode_literals
 import youtube_dl
-
 import tkinter as tk
-window = tk.Tk()
-urlEntry = tk.Entry()
-urlEntry.pack();
-dlButton = tk.Button(text="Download")
-dlButton.pack()
 
-url=[urlEntry.get()]
+
+
 
 class FormatLogger(object):
     message = ''
@@ -21,14 +16,25 @@ class FormatLogger(object):
     def info(self, msg):
         print('Info'+msg) 
 
-fmtLog = FormatLogger()
-ytdl_opts = { 'listformats' : 'true' , 'logger': fmtLog}
-with youtube_dl.YoutubeDL(ytdl_opts) as ydl:
-    format_list = ydl.download(url)
 
-formats = fmtLog.message.split('\n')
-displayText = formats.pop(0) + '\n' + formats.pop(0)
+def list_formats():
+    url=[urlEntry.get()]
+    fmtLog = FormatLogger()
+    ytdl_opts = { 'listformats' : 'true' , 'logger': fmtLog}
+    with youtube_dl.YoutubeDL(ytdl_opts) as ydl:
+        format_list = ydl.download(url)
+    formats = fmtLog.message.split('\n')
+    displayText = formats.pop(0) + '\n' + formats.pop(0)
+    displayMessage = tk.Label(text= displayText)
+    displayMessage.pack()
+    for fmt in formats:
+        cb = tk.Checkbutton(text=fmt, onvalue=fmt)
+        cb.pack()
+#    format_list = tk.Listbox(height = len(formats), selectmode= 'extended')
+#    format_list.pack()
 
-for fmt in formats:
-    cb = tk.Checkbutton(text=fmt, onvalue=fmt)
-    cb.pack()
+window = tk.Tk()
+urlEntry = tk.Entry(window,width = 50)
+urlEntry.pack();
+dlButton = tk.Button(window, text="Download", command=list_formats)
+dlButton.pack()
