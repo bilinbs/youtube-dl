@@ -22,17 +22,24 @@ def list_formats():
     formats = fmtLog.message.split('\n')
     displayText = formats.pop(0) + '\n' + formats.pop(0)
     displayMessage = tk.Label(text= displayText)
-    displayMessage.pack()
+    displayMessage.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
+    #displayMessage.pack()
+    rowNum = 2
     for fmt in formats:
         cb = tk.Checkbutton(text=fmt, onvalue=fmt)
-        cb.pack()
+        cb.grid(row=rowNum, column=0, sticky="w", padx=5, pady=5)
+        rowNum = rowNum + 1
 #    format_list = tk.Listbox(height = len(formats), selectmode= 'extended')
 #    format_list.pack()
 
 window = tk.Tk()
+window.title("YoutubeDL")
+#window.rowconfigure(0, minsize=640, weight=1)
+#window.columnconfigure(1, minsize=480, weight=1)
 urlEntry = tk.Entry(window,width = 50)
-urlEntry.pack();
 dlButton = tk.Button(window, text="Download", command=list_formats)
-dlButton.pack()
-
+urlEntry.grid(row=0, column=0, sticky="nw", padx=5, pady=5)
+dlButton.grid(row=0, column=1, sticky="nw", padx=5)
+#urlEntry.pack()
+#dlButton.pack()
 window.mainloop()
